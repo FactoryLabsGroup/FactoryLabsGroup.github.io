@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Factory Labs</title>
+<meta name="description" content="Factory Labs makes thoughtful apps for iPhone. Home of Chronos.">
+<link rel="canonical" href="https://factorylabs.app/">
+<meta property="og:title" content="Factory Labs">
+<meta property="og:description" content="Thoughtful apps for iPhone. Home of Chronos.">
+<meta property="og:url" content="https://factorylabs.app/">
+<meta name="theme-color" content="#F3ECDF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1220" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&display=swap">
+<style>
+  :root {
+    --bg: #F3ECDF; --surface: #FCF8F1; --ink: #1E1A16; --ink-2: #6E655B;
+    --bronze: #8A5C22; --divider: #E1D7C5; --shadow: 59, 46, 30;
+    --serif: ui-serif, "New York", "Source Serif 4", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0E1220; --surface: #171D2E; --ink: #F1E9DA; --ink-2: #B5AC9D; --bronze: #D2A462; --divider: #2A3350; --shadow: 0, 0, 0; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
+    background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  main { flex: 1; width: 100%; max-width: 720px; margin: 0 auto; padding: clamp(72px, 14vh, 140px) 16px 48px; }
+  .kicker { margin: 0 0 14px; font: 700 12.5px/1.2 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--bronze); }
+  h1 { margin: 0; font: 700 clamp(40px, 7vw, 64px)/1.05 var(--serif); letter-spacing: -0.02em; }
+  .lede { margin: 18px 0 0; color: var(--ink-2); font-size: clamp(17px, 2vw, 20px); max-width: 32em; }
+  h2 { margin: 64px 0 16px; font: 700 12.5px/1.2 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
+  .app {
+    display: flex; align-items: center; gap: 20px; padding: 20px; border-radius: 24px;
+    background: var(--surface); color: inherit; text-decoration: none;
+    box-shadow: 0 1px 0 var(--divider), 0 24px 50px -36px rgba(var(--shadow), .5);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .app:hover { transform: translateY(-3px); box-shadow: 0 1px 0 var(--divider), 0 30px 60px -34px rgba(var(--shadow), .6); }
+  .app img { width: 76px; height: 76px; border-radius: 18px; flex: none; box-shadow: 0 8px 20px -8px rgba(0,0,0,.4); }
+  .app h3 { margin: 0; font: 700 22px/1.2 var(--serif); }
+  .app p { margin: 4px 0 0; color: var(--ink-2); font-size: 15.5px; line-height: 1.45; }
+  .app .arrow { margin-left: auto; color: var(--bronze); font-size: 22px; transition: translate .2s; }
+  .app:hover .arrow { translate: 4px 0; }
+  footer { max-width: 720px; width: 100%; margin: 0 auto; padding: 24px 16px calc(32px + env(safe-area-inset-bottom)); color: var(--ink-2); font-size: 14px; border-top: 1px solid var(--divider); display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  footer a { color: inherit; text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+  @media (max-width: 480px) { .app { gap: 14px; padding: 16px; } .app img { width: 60px; height: 60px; border-radius: 14px; } }
+</style>
+</head>
+<body>
+<main>
+  <p class="kicker">Factory Labs</p>
+  <h1>Small apps, made with care.</h1>
+  <p class="lede">We make thoughtful apps for iPhone, in English and Georgian.</p>
+
+  <h2>Our apps</h2>
+  <a class="app" href="/chronos/">
+    <img src="assets/chronos-icon.png" alt="" width="76" height="76">
+    <div>
+      <h3>Chronos</h3>
+      <p>History, in small discoveries. The strangest true stories, as short illustrated cards.</p>
+    </div>
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>
+</main>
+<footer>
+  <span>© 2026 Factory Labs</span>
+  <a href="mailto:factorylabsteam@gmail.com">factorylabsteam@gmail.com</a>
+</footer>
+</body>
+</html>
