@@ -4,74 +4,536 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Factory Labs</title>
-<meta name="description" content="Factory Labs makes thoughtful apps for iPhone and Android. Home of Chronos.">
+<meta name="description" content="Factory Labs is a product studio. We build apps people keep. Home of Chronos.">
 <link rel="canonical" href="https://factorylabs.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Factory Labs">
 <meta property="og:title" content="Factory Labs">
-<meta property="og:description" content="Thoughtful apps for iPhone and Android. Home of Chronos.">
+<meta property="og:description" content="A product studio. We build apps people keep. Home of Chronos.">
 <meta property="og:url" content="https://factorylabs.app/">
+<meta property="og:image" content="https://factorylabs.app/assets/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Factory Labs — we build apps people keep.">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F3ECDF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1220" media="(prefers-color-scheme: dark)">
+<script>
+  // Decide the language before the first paint, so a Georgian reader never sees English flash by.
+  (function () {
+    var lang = null;
+    try {
+      lang = new URLSearchParams(location.search).get('lang')
+          || localStorage.getItem('factorylabs.lang')
+          || localStorage.getItem('chronos.lang');
+    } catch (e) {}
+    if (lang !== 'ka' && lang !== 'en') {
+      var prefs = navigator.languages || [navigator.language || 'en'];
+      lang = prefs.some(function (l) { return /^ka\b/i.test(l); }) ? 'ka' : 'en';
+    }
+    document.documentElement.lang = lang;
+    if (lang !== 'en') document.documentElement.classList.add('i18n-pending');
+  })();
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%238A5C22' d='M12 1C13.2 7.2 16.8 10.8 23 12 16.8 13.2 13.2 16.8 12 23 10.8 16.8 7.2 13.2 1 12 7.2 10.8 10.8 7.2 12 1Z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700&family=Noto+Serif+Georgian:wght@600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,600;1,8..60,700&display=swap">
 <style>
   :root {
-    --bg: #F3ECDF; --surface: #FCF8F1; --ink: #1E1A16; --ink-2: #6E655B;
-    --bronze: #8A5C22; --divider: #E1D7C5; --shadow: 59, 46, 30;
-    --serif: ui-serif, "New York", "Source Serif 4", Georgia, serif;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bg: #F3ECDF; --surface: #FCF8F1; --surface-2: #FFFDF8;
+    --ink: #1E1A16; --ink-2: #6E655B; --ink-3: #9A9083;
+    --bronze: #8A5C22;
+    --divider: #E1D7C5; --hairline: #E8DECD;
+    --shadow: 59, 46, 30;
+    --glow-a: rgba(198, 142, 64, .17);
+    --glow-b: rgba(138, 92, 34, .10);
+    --top-light: linear-gradient(180deg, rgba(255, 253, 247, .8), rgba(255, 253, 247, 0) 46%);
+    --stars: 0;
+
+    /* fixed across themes — the night panel */
+    --band-ink: #F4ECDE; --band-ink-2: #A7AFCC; --band-gold: #E4B872;
+    --serif: ui-serif, "New York", "Source Serif 4", "Noto Serif Georgian", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Noto Sans Georgian", "Helvetica Neue", Arial, sans-serif;
     color-scheme: light dark;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #0E1220; --surface: #171D2E; --ink: #F1E9DA; --ink-2: #B5AC9D; --bronze: #D2A462; --divider: #2A3350; --shadow: 0, 0, 0; }
+    :root {
+      --bg: #0E1220; --surface: #171D2E; --surface-2: #1D2439;
+      --ink: #F1E9DA; --ink-2: #B5AC9D; --ink-3: #8C8577;
+      --bronze: #D2A462;
+      --divider: #2A3350; --hairline: #232B42;
+      --shadow: 0, 0, 0;
+      --glow-a: rgba(108, 104, 214, .24);
+      --glow-b: rgba(210, 164, 98, .12);
+      --top-light: linear-gradient(180deg, rgba(96, 94, 186, .16), rgba(96, 94, 186, 0) 52%);
+      --stars: 1;
+    }
   }
+
   * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0; min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column;
-    background: var(--bg); color: var(--ink); font: 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased;
+    margin: 0; min-height: 100vh; min-height: 100svh;
+    display: flex; flex-direction: column;
+    background: var(--bg); color: var(--ink);
+    font: 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility; overflow-x: hidden;
   }
-  main { flex: 1; width: 100%; max-width: 720px; margin: 0 auto; padding: clamp(72px, 14vh, 140px) 16px 48px; }
-  .kicker { margin: 0 0 14px; font: 700 12.5px/1.2 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--bronze); }
-  h1 { margin: 0; font: 700 clamp(40px, 7vw, 64px)/1.05 var(--serif); letter-spacing: -0.02em; }
-  .lede { margin: 18px 0 0; color: var(--ink-2); font-size: clamp(17px, 2vw, 20px); max-width: 32em; }
-  h2 { margin: 64px 0 16px; font: 700 12.5px/1.2 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--ink-2); }
-  .app {
-    display: flex; align-items: center; gap: 20px; padding: 20px; border-radius: 24px;
-    background: var(--surface); color: inherit; text-decoration: none;
-    box-shadow: 0 1px 0 var(--divider), 0 24px 50px -36px rgba(var(--shadow), .5);
-    transition: transform .25s, box-shadow .25s;
+
+  /* ---- atmosphere ---------------------------------------------------- */
+  .atmos {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    background: var(--top-light), radial-gradient(58vw 42vw at 10% 96%, var(--glow-b), transparent 70%);
   }
-  .app:hover { transform: translateY(-3px); box-shadow: 0 1px 0 var(--divider), 0 30px 60px -34px rgba(var(--shadow), .6); }
-  .app img { width: 76px; height: 76px; border-radius: 18px; flex: none; box-shadow: 0 8px 20px -8px rgba(0,0,0,.4); }
-  .app h3 { margin: 0; font: 700 22px/1.2 var(--serif); }
-  .app p { margin: 4px 0 0; color: var(--ink-2); font-size: 15.5px; line-height: 1.45; }
-  .app .arrow { margin-left: auto; color: var(--bronze); font-size: 22px; transition: translate .2s; }
-  .app:hover .arrow { translate: 4px 0; }
-  footer { max-width: 720px; width: 100%; margin: 0 auto; padding: 24px 16px calc(32px + env(safe-area-inset-bottom)); color: var(--ink-2); font-size: 14px; border-top: 1px solid var(--divider); display: flex; flex-wrap: wrap; gap: 8px 24px; }
-  footer a { color: inherit; text-decoration: none; }
-  footer a:hover { color: var(--ink); }
-  @media (max-width: 480px) { .app { gap: 14px; padding: 16px; } .app img { width: 60px; height: 60px; border-radius: 14px; } }
+  .atmos::before {
+    content: ""; position: absolute; left: 50%; top: -42vh;
+    width: min(1180px, 160vw); aspect-ratio: 1; translate: -50% 0;
+    background: radial-gradient(circle at 50% 50%, var(--glow-a), transparent 62%);
+    animation: drift 38s ease-in-out infinite alternate;
+  }
+  .atmos::after {
+    content: ""; position: absolute; inset: 0; opacity: var(--stars);
+    background-image:
+      radial-gradient(1.3px 1.3px at 18% 22%, rgba(255,255,255,.7), transparent 62%),
+      radial-gradient(1px 1px at 62% 11%, rgba(255,255,255,.5), transparent 62%),
+      radial-gradient(1.7px 1.7px at 84% 43%, rgba(255,238,206,.55), transparent 62%),
+      radial-gradient(1px 1px at 33% 69%, rgba(255,255,255,.4), transparent 62%),
+      radial-gradient(1.2px 1.2px at 73% 81%, rgba(255,255,255,.48), transparent 62%),
+      radial-gradient(1px 1px at 7% 88%, rgba(255,255,255,.36), transparent 62%);
+    background-size: 460px 460px;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    opacity: .05; mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  @keyframes drift { from { translate: -50% 0; } to { translate: -46% 4vh; } }
+
+  /* ---- shell --------------------------------------------------------- */
+  .top, main, footer { position: relative; z-index: 2; width: 100%; max-width: 860px; margin: 0 auto; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 28px 0; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font: 700 16.5px/1 var(--serif); letter-spacing: -.01em; }
+  .mark { width: 17px; height: 17px; color: var(--bronze); flex: none; transition: rotate .6s cubic-bezier(.2,.7,.2,1); }
+  .brand:hover .mark { rotate: 90deg; }
+  .top-link {
+    font: 600 14px/1 var(--sans); color: var(--ink-2); text-decoration: none;
+    padding: 10px 16px; border-radius: 999px; border: 1px solid var(--divider);
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    transition: color .2s, border-color .2s, background .2s;
+  }
+  .top-link:hover { color: var(--bronze); border-color: color-mix(in srgb, var(--bronze) 40%, var(--divider)); background: var(--surface); }
+
+  main { flex: 1; padding: clamp(60px, 12vh, 116px) 28px 40px; }
+
+  /* ---- hero ---------------------------------------------------------- */
+  .kicker {
+    display: flex; align-items: center; gap: 12px; margin: 0 0 20px;
+    font: 700 12px/1.2 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--bronze);
+  }
+  .kicker::before { content: ""; width: 30px; height: 1px; background: currentColor; opacity: .5; }
+  h1 {
+    margin: 0; font: 700 clamp(46px, 9vw, 88px)/1.0 var(--serif);
+    letter-spacing: -.035em; font-optical-sizing: auto;
+  }
+  h1 em { font-style: italic; color: var(--bronze); }
+  .lede { margin: 26px 0 0; max-width: 31em; color: var(--ink-2); font-size: clamp(17.5px, 2.1vw, 21px); line-height: 1.6; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 34px 0 0; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 14px 22px; border-radius: 999px; text-decoration: none;
+    font: 600 15px/1 var(--sans); letter-spacing: -.005em;
+    transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, background .2s, border-color .2s, color .2s;
+  }
+  .btn-primary {
+    color: #FFF7EA; background: linear-gradient(180deg, #A06C29, #84561F);
+    box-shadow: 0 1px 0 rgba(255,255,255,.18) inset, 0 12px 26px -12px rgba(138,92,34,.8);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,.22) inset, 0 18px 34px -14px rgba(138,92,34,.9); }
+  .btn-ghost { color: var(--ink); border: 1px solid var(--divider); background: color-mix(in srgb, var(--surface) 60%, transparent); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--bronze) 45%, var(--divider)); color: var(--bronze); }
+  .btn .arrow { transition: translate .25s cubic-bezier(.2,.7,.2,1); }
+  .btn:hover .arrow { translate: 4px 0; }
+
+  /* ---- section headings ---------------------------------------------- */
+  .section { margin-top: clamp(64px, 11vh, 108px); }
+  .sec-h {
+    display: flex; align-items: center; gap: 16px; margin: 0 0 22px;
+    font: 700 11.5px/1.2 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-3);
+  }
+  .sec-h::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--divider), transparent); }
+
+  /* ---- flagship (night panel) ---------------------------------------- */
+  .flagship {
+    position: relative; overflow: hidden; isolation: isolate;
+    display: block; color: var(--band-ink); text-decoration: none;
+    padding: clamp(28px, 4.4vw, 44px); border-radius: 30px;
+    background: linear-gradient(158deg, #1E2749 0%, #131A33 52%, #0B0F1E 100%);
+    border: 1px solid rgba(255, 255, 255, .09);
+    box-shadow: 0 30px 70px -40px rgba(10, 14, 32, .9), 0 2px 4px rgba(var(--shadow), .06);
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s, border-color .35s;
+  }
+  .flagship::before {
+    content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+    background-image:
+      radial-gradient(1.4px 1.4px at 14% 18%, rgba(255,255,255,.8), transparent 60%),
+      radial-gradient(1px 1px at 47% 9%, rgba(255,255,255,.55), transparent 60%),
+      radial-gradient(1.8px 1.8px at 78% 26%, rgba(255,236,200,.7), transparent 60%),
+      radial-gradient(1px 1px at 88% 66%, rgba(255,255,255,.5), transparent 60%),
+      radial-gradient(1.2px 1.2px at 28% 78%, rgba(255,255,255,.45), transparent 60%),
+      radial-gradient(1px 1px at 62% 88%, rgba(255,255,255,.4), transparent 60%),
+      radial-gradient(38% 60% at 82% 6%, rgba(228,184,114,.20), transparent 70%);
+    background-size: 380px 380px, 380px 380px, 380px 380px, 380px 380px, 380px 380px, 380px 380px, 100% 100%;
+  }
+  .flagship::after {
+    content: ""; position: absolute; inset: -40% -60%; z-index: -1; pointer-events: none;
+    background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.14) 50%, transparent 58%);
+    translate: -70% 0; opacity: 0;
+  }
+  .flagship:hover, .flagship:focus-visible {
+    transform: translateY(-4px);
+    border-color: rgba(228, 184, 114, .32);
+    box-shadow: 0 44px 84px -40px rgba(10, 14, 32, .95), 0 2px 4px rgba(var(--shadow), .07);
+  }
+  .flagship:hover::after { animation: sheen 1.15s cubic-bezier(.3,.6,.3,1) forwards; }
+  @keyframes sheen { from { translate: -70% 0; opacity: .9; } to { translate: 70% 0; opacity: 0; } }
+
+  .fl-eyebrow { display: block; font: 700 11px/1 var(--sans); letter-spacing: .22em; text-transform: uppercase; color: var(--band-gold); }
+  .fl-head { display: flex; align-items: center; gap: 20px; margin: 22px 0 0; }
+  .fl-icon {
+    width: 88px; height: 88px; border-radius: 21px; flex: none;
+    box-shadow: 0 14px 30px -12px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.08);
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s;
+  }
+  .flagship:hover .fl-icon { transform: scale(1.04) rotate(-1.5deg); box-shadow: 0 20px 40px -14px rgba(228,184,114,.4), 0 0 0 1px rgba(255,255,255,.12); }
+  .fl-name { display: block; font: 700 clamp(30px, 4.4vw, 40px)/1.1 var(--serif); letter-spacing: -.025em; }
+  .fl-tag { display: block; margin: 4px 0 0; color: var(--band-gold); font: 600 15px/1.4 var(--sans); }
+  .fl-desc { display: block; margin: 22px 0 0; max-width: 46em; color: var(--band-ink-2); font-size: 16.5px; line-height: 1.65; }
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 12px;
+    margin: 30px 0 0; padding: 26px 0 0; border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .stats div { display: block; }
+  .stats b { display: block; font: 700 clamp(24px, 3.4vw, 32px)/1 var(--serif); color: var(--band-ink); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .stats span { display: block; margin: 7px 0 0; font: 500 12.5px/1.35 var(--sans); color: var(--band-ink-2); }
+  .fl-cta { display: inline-flex; align-items: center; gap: 9px; margin: 30px 0 0; font: 600 15px/1 var(--sans); color: var(--band-gold); }
+  .flagship:hover .fl-cta .arrow { translate: 5px 0; }
+  .fl-cta .arrow { transition: translate .25s cubic-bezier(.2,.7,.2,1); }
+  .note { margin: 20px 0 0; color: var(--ink-3); font-size: 14.5px; }
+
+  /* ---- capabilities --------------------------------------------------- */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 22px; overflow: hidden; }
+  .grid article { background: var(--surface); padding: 26px 26px 28px; }
+  .grid h3 { margin: 0; font: 700 19px/1.3 var(--serif); letter-spacing: -.012em; }
+  .grid h3::before { content: ""; display: block; width: 22px; height: 2px; border-radius: 2px; background: var(--bronze); opacity: .7; margin: 0 0 14px; }
+  .grid p { margin: 8px 0 0; color: var(--ink-2); font-size: 15.5px; line-height: 1.6; }
+
+  /* ---- closing -------------------------------------------------------- */
+  .closing {
+    margin-top: clamp(64px, 11vh, 108px); padding: clamp(28px, 4vw, 40px);
+    border-radius: 26px; border: 1px solid var(--hairline);
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    box-shadow: 0 1px 2px rgba(var(--shadow), .04), 0 28px 56px -44px rgba(var(--shadow), .5);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px;
+  }
+  .closing h2 { margin: 0; font: 700 clamp(24px, 3.4vw, 32px)/1.2 var(--serif); letter-spacing: -.025em; }
+  .closing p { margin: 8px 0 0; color: var(--ink-2); font-size: 16px; max-width: 30em; }
+
+  /* ---- footer --------------------------------------------------------- */
+  footer {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 28px;
+    margin-top: clamp(56px, 9vh, 88px);
+    padding: 24px 28px calc(30px + env(safe-area-inset-bottom));
+    border-top: 1px solid var(--divider); color: var(--ink-3); font-size: 14px;
+  }
+  .foot-brand { display: inline-flex; align-items: center; gap: 9px; }
+  .foot-brand .mark { width: 13px; height: 13px; opacity: .8; }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+  footer a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
+  footer a:hover { color: var(--bronze); }
+
+  /* ---- language ------------------------------------------------------- */
+  html.i18n-pending body { visibility: hidden; }
+  .top-right { display: flex; align-items: center; gap: 10px; }
+  .lang {
+    display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px;
+    border: 1px solid var(--divider); background: color-mix(in srgb, var(--surface) 70%, transparent);
+  }
+  .lang button {
+    border: 0; background: none; cursor: pointer; padding: 7px 11px; border-radius: 999px;
+    font: 600 12.5px/1 var(--sans); color: var(--ink-3);
+    transition: background .2s, color .2s;
+  }
+  .lang button:hover { color: var(--ink-2); }
+  .lang button[aria-pressed="true"] { background: var(--surface-2); color: var(--ink); box-shadow: 0 1px 2px rgba(var(--shadow), .1); }
+  .skip {
+    position: absolute; left: -9999px; top: 0; z-index: 5;
+    padding: 13px 20px; border-radius: 0 0 14px 0;
+    background: var(--surface); color: var(--ink); text-decoration: none;
+    font: 600 14px/1 var(--sans); box-shadow: 0 8px 24px -12px rgba(var(--shadow), .6);
+  }
+  .skip:focus { left: 0; }
+
+  /* Georgian has no letter case and runs longer, so it gets its own metrics. */
+  html[lang="ka"] body { line-height: 1.72; }
+  html[lang="ka"] h1 { font-size: clamp(34px, 7vw, 66px); line-height: 1.14; letter-spacing: -.012em; }
+  html[lang="ka"] h1 em { font-style: normal; }
+  html[lang="ka"] .kicker,
+  html[lang="ka"] .sec-h,
+  html[lang="ka"] .fl-eyebrow { text-transform: none; letter-spacing: .05em; }
+  html[lang="ka"] .fl-name { font-size: clamp(27px, 4vw, 36px); letter-spacing: -.005em; }
+  html[lang="ka"] .grid h3,
+  html[lang="ka"] .closing h2,
+  html[lang="ka"] .stats b { letter-spacing: -.005em; }
+  html[lang="ka"] .stats span { font-size: 12px; }
+  html[lang="ka"] .lede { font-size: clamp(16.5px, 2vw, 19.5px); }
+
+  a:focus-visible, .lang button:focus-visible { outline: 2px solid var(--bronze); outline-offset: 4px; }
+  .flagship:focus-visible { outline-offset: 6px; }
+
+  /* ---- entrance -------------------------------------------------------- */
+  .rise { animation: rise .85s cubic-bezier(.2,.75,.2,1) both; }
+  @keyframes rise { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+
+  @media (max-width: 720px) {
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 22px 16px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .top { padding-inline: 20px; }
+    .top-link { display: none; }
+    main, footer { padding-inline: 20px; }
+    main { padding-top: 48px; }
+    .fl-head { gap: 15px; }
+    .fl-icon { width: 66px; height: 66px; border-radius: 16px; }
+    .flagship { border-radius: 24px; }
+    .btn { flex: 1 1 100%; justify-content: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important; animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+    .flagship:hover, .btn:hover { transform: none; }
+  }
 </style>
 </head>
 <body>
-<main>
-  <p class="kicker">Factory Labs</p>
-  <h1>Small apps, made with care.</h1>
-  <p class="lede">We make thoughtful apps for iPhone and Android, in English and Georgian.</p>
+<div class="atmos" aria-hidden="true"></div>
 
-  <h2>Our apps</h2>
-  <a class="app" href="/chronos/">
-    <img src="assets/chronos-icon.png" alt="" width="76" height="76">
-    <div>
-      <h3>Chronos</h3>
-      <p>History, in small discoveries. The strangest true stories, as short illustrated cards.</p>
-    </div>
-    <span class="arrow" aria-hidden="true">→</span>
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+
+<header class="top rise">
+  <a class="brand" href="/" aria-label="Factory Labs — home">
+    <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 1C13.2 7.2 16.8 10.8 23 12 16.8 13.2 13.2 16.8 12 23 10.8 16.8 7.2 13.2 1 12 7.2 10.8 10.8 7.2 12 1Z"/></svg>
+    <span>Factory Labs</span>
   </a>
+  <span class="top-right">
+    <span class="lang" role="group" data-i18n-aria="lang_label" aria-label="Language">
+      <button type="button" data-lang="ka" lang="ka" aria-pressed="false">ქარ</button>
+      <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
+    </span>
+    <a class="top-link" href="mailto:factorylabsteam@gmail.com" data-i18n="nav_work">Work with us</a>
+  </span>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <p class="kicker rise" style="animation-delay:.05s" data-i18n="hero_kicker">Product studio</p>
+    <h1 class="rise" style="animation-delay:.12s" data-i18n-html="hero_title">We build apps<br>people <em>keep</em>.</h1>
+    <p class="lede rise" style="animation-delay:.2s" data-i18n="hero_lede">One idea at a time, taken all the way. Research, design, engineering and illustration under one roof — until the whole thing feels effortless.</p>
+    <div class="actions rise" style="animation-delay:.28s">
+      <a class="btn btn-primary" href="/chronos/" data-chronos="/chronos/"><span data-i18n="hero_cta_primary">Meet Chronos</span> <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="mailto:factorylabsteam@gmail.com" data-i18n="hero_cta_secondary">Work with us</a>
+    </div>
+  </section>
+
+  <section class="section rise" style="animation-delay:.36s">
+    <h2 class="sec-h" data-i18n="apps_heading">What we make</h2>
+    <a class="flagship" href="/chronos/" data-chronos="/chronos/">
+      <span class="fl-eyebrow" data-i18n="fl_eyebrow">Flagship</span>
+      <span class="fl-head">
+        <img class="fl-icon" src="assets/chronos-icon.png" alt="Chronos app icon" data-i18n-alt="fl_icon_alt" width="88" height="88" decoding="async">
+        <span>
+          <span class="fl-name">Chronos</span>
+          <span class="fl-tag" data-i18n="fl_tagline">History, in small discoveries</span>
+        </span>
+      </span>
+      <span class="fl-desc" data-i18n="fl_desc">The strangest true stories that ever happened, as short illustrated cards you can read in a minute. Every story is written, illustrated and traced back to a real source before it ships.</span>
+      <span class="stats">
+        <span><b>75</b><span data-i18n="stat_stories">illustrated stories</span></span>
+        <span><b>150+</b><span data-i18n="stat_events">events on the timeline</span></span>
+        <span><b>84</b><span data-i18n="stat_civs">civilizations</span></span>
+        <span><b>59</b><span data-i18n="stat_regions">regions mapped</span></span>
+      </span>
+      <span class="fl-cta"><span data-i18n="fl_cta">Visit Chronos</span> <span class="arrow" aria-hidden="true">→</span></span>
+    </a>
+    <p class="note" data-i18n="apps_note">The next one is already in the workshop.</p>
+  </section>
+
+  <section class="section rise" style="animation-delay:.44s">
+    <h2 class="sec-h" data-i18n="work_heading">How we work</h2>
+    <div class="grid">
+      <article>
+        <h3 data-i18n="w1_title">Deep, not wide</h3>
+        <p data-i18n="w1_text">One product gets the whole team. We would rather build a single thing people open every day than a shelf of things they forget.</p>
+      </article>
+      <article>
+        <h3 data-i18n="w2_title">Design leads</h3>
+        <p data-i18n="w2_text">Every screen is designed, argued over and rebuilt before it is called finished. The details nobody notices are the ones that make it feel good.</p>
+      </article>
+      <article>
+        <h3 data-i18n="w3_title">Built to be fast</h3>
+        <p data-i18n="w3_text">Smooth scrolling, instant launches, no waiting on a spinner. Performance is a feature we refuse to trade away.</p>
+      </article>
+      <article>
+        <h3 data-i18n="w4_title">Nothing made up</h3>
+        <p data-i18n="w4_text">Every fact we publish is checked and credited to its source. If we cannot stand behind it, it does not go in the app.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="closing rise" style="animation-delay:.5s">
+    <div>
+      <h2 data-i18n="closing_title">Got something ambitious?</h2>
+      <p data-i18n="closing_text">A new product, a partnership, or an idea you cannot shake. Tell us what you are building.</p>
+    </div>
+    <a class="btn btn-primary" href="mailto:factorylabsteam@gmail.com"><span data-i18n="closing_cta">Start a conversation</span> <span class="arrow" aria-hidden="true">→</span></a>
+  </section>
 </main>
+
 <footer>
-  <span>© 2026 Factory Labs</span>
-  <a href="mailto:factorylabsteam@gmail.com">factorylabsteam@gmail.com</a>
+  <span class="foot-brand">
+    <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 1C13.2 7.2 16.8 10.8 23 12 16.8 13.2 13.2 16.8 12 23 10.8 16.8 7.2 13.2 1 12 7.2 10.8 10.8 7.2 12 1Z"/></svg>
+    <span data-i18n="footer_copy">© 2026 Factory Labs</span>
+  </span>
+  <nav class="foot-links">
+    <a href="/chronos/" data-chronos="/chronos/">Chronos</a>
+    <a href="/chronos/support.html" data-chronos="/chronos/support.html" data-i18n="footer_support">Support</a>
+    <a href="/chronos/privacy.html" data-chronos="/chronos/privacy.html" data-i18n="footer_privacy">Privacy</a>
+    <a href="mailto:factorylabsteam@gmail.com">factorylabsteam@gmail.com</a>
+  </nav>
 </footer>
+<script>
+  (function () {
+    var STRINGS = {
+      en: {
+        page_title: 'Factory Labs',
+        page_desc: 'Factory Labs is a product studio. We build apps people keep. Home of Chronos.',
+        skip: 'Skip to content',
+        lang_label: 'Language',
+        nav_work: 'Work with us',
+        hero_kicker: 'Product studio',
+        hero_title: 'We build apps<br>people <em>keep</em>.',
+        hero_lede: 'One idea at a time, taken all the way. Research, design, engineering and illustration under one roof — until the whole thing feels effortless.',
+        hero_cta_primary: 'Meet Chronos',
+        hero_cta_secondary: 'Work with us',
+        apps_heading: 'What we make',
+        fl_eyebrow: 'Flagship',
+        fl_icon_alt: 'Chronos app icon',
+        fl_tagline: 'History, in small discoveries',
+        fl_desc: 'The strangest true stories that ever happened, as short illustrated cards you can read in a minute. Every story is written, illustrated and traced back to a real source before it ships.',
+        stat_stories: 'illustrated stories',
+        stat_events: 'events on the timeline',
+        stat_civs: 'civilizations',
+        stat_regions: 'regions mapped',
+        fl_cta: 'Visit Chronos',
+        apps_note: 'The next one is already in the workshop.',
+        work_heading: 'How we work',
+        w1_title: 'Deep, not wide',
+        w1_text: 'One product gets the whole team. We would rather build a single thing people open every day than a shelf of things they forget.',
+        w2_title: 'Design leads',
+        w2_text: 'Every screen is designed, argued over and rebuilt before it is called finished. The details nobody notices are the ones that make it feel good.',
+        w3_title: 'Built to be fast',
+        w3_text: 'Smooth scrolling, instant launches, no waiting on a spinner. Performance is a feature we refuse to trade away.',
+        w4_title: 'Nothing made up',
+        w4_text: 'Every fact we publish is checked and credited to its source. If we cannot stand behind it, it does not go in the app.',
+        closing_title: 'Got something ambitious?',
+        closing_text: 'A new product, a partnership, or an idea you cannot shake. Tell us what you are building.',
+        closing_cta: 'Start a conversation',
+        footer_support: 'Support',
+        footer_privacy: 'Privacy',
+        footer_copy: '© 2026 Factory Labs'
+      },
+      ka: {
+        page_title: 'Factory Labs — პროდუქტების სტუდია',
+        page_desc: 'Factory Labs პროდუქტების სტუდიაა. ვქმნით აპებს, რომლებიც რჩება. აქ იქმნება Chronos.',
+        skip: 'შინაარსზე გადასვლა',
+        lang_label: 'ენა',
+        nav_work: 'თანამშრომლობა',
+        hero_kicker: 'პროდუქტების სტუდია',
+        hero_title: 'ვქმნით აპებს,<br>რომლებიც <em>რჩება</em>.',
+        hero_lede: 'ერთ იდეაზე ვმუშაობთ და ბოლომდე ვასრულებთ. კვლევა, დიზაინი, ინჟინერია და ილუსტრაცია — ერთ ჭერქვეშ, სანამ ყველაფერი ბუნებრივად არ იმუშავებს.',
+        hero_cta_primary: 'გაიცანით Chronos',
+        hero_cta_secondary: 'თანამშრომლობა',
+        apps_heading: 'რას ვქმნით',
+        fl_eyebrow: 'მთავარი პროდუქტი',
+        fl_icon_alt: 'Chronos-ის აპის ხატულა',
+        fl_tagline: 'ისტორია პატარა აღმოჩენებად',
+        fl_desc: 'ყველაზე უცნაური ნამდვილი ამბები მოკლე, ილუსტრირებულ ბარათებად — თითოეული ერთ წუთში იკითხება. ყველა ისტორია დაწერილი, დახატული და ნამდვილ წყაროზე დაყრდნობილია.',
+        stat_stories: 'ილუსტრირებული ისტორია',
+        stat_events: 'მოვლენა ქრონოლოგიაზე',
+        stat_civs: 'ცივილიზაცია',
+        stat_regions: 'რეგიონი რუკაზე',
+        fl_cta: 'ნახეთ Chronos',
+        apps_note: 'შემდეგი უკვე სახელოსნოშია.',
+        work_heading: 'როგორ ვმუშაობთ',
+        w1_title: 'სიღრმეში, და არა სიგანეში',
+        w1_text: 'ერთ პროდუქტს მთელი გუნდი ხვდება. გვირჩევნია ერთი რამ, რომელსაც ყოველდღე ხსნიან, ვიდრე ათი, რომელსაც ივიწყებენ.',
+        w2_title: 'დიზაინი პირველია',
+        w2_text: 'ყველა ეკრანი იხატება, კამათდება და თავიდან შენდება, სანამ დასრულებულად ჩაითვლება. სწორედ შეუმჩნეველი დეტალები ქმნის შეგრძნებას.',
+        w3_title: 'აგებულია სისწრაფისთვის',
+        w3_text: 'გლუვი გადაადგილება, მყისიერი გაშვება, ლოდინის გარეშე. წარმადობა ფუნქციაა და მასზე უარს არ ვამბობთ.',
+        w4_title: 'არაფერია მოგონილი',
+        w4_text: 'ყველა ფაქტი გადამოწმებულია და წყარო მითითებული. თუ მის უკან ვერ ვდგებით, აპში არ შედის.',
+        closing_title: 'გაქვთ ამბიციური იდეა?',
+        closing_text: 'ახალი პროდუქტი, პარტნიორობა ან იდეა, რომელიც თავს არ განებებთ. მოგვწერეთ, რას აშენებთ.',
+        closing_cta: 'დაგვიკავშირდით',
+        footer_support: 'მხარდაჭერა',
+        footer_privacy: 'კონფიდენციალურობა',
+        footer_copy: '© 2026 Factory Labs'
+      }
+    };
+
+    var root = document.documentElement;
+    var lang = root.lang === 'ka' ? 'ka' : 'en';
+
+    function t(key) { return (STRINGS[lang] && STRINGS[lang][key]) || STRINGS.en[key] || key; }
+
+    function apply() {
+      document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.dataset.i18n); });
+      document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.dataset.i18nHtml); });
+      document.querySelectorAll('[data-i18n-alt]').forEach(function (el) { el.alt = t(el.dataset.i18nAlt); });
+      document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+      document.title = t('page_title');
+      var desc = document.querySelector('meta[name="description"]');
+      if (desc) desc.content = t('page_desc');
+      // Carry the reading language across to the Chronos site.
+      document.querySelectorAll('[data-chronos]').forEach(function (a) { a.href = a.dataset.chronos + '?lang=' + lang; });
+      document.querySelectorAll('.lang button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
+      });
+      root.classList.remove('i18n-pending');
+    }
+
+    function setLanguage(next) {
+      if (next === lang) return;
+      lang = next;
+      root.lang = lang;
+      try {
+        localStorage.setItem('factorylabs.lang', lang);
+        localStorage.setItem('chronos.lang', lang);
+      } catch (e) {}
+      apply();
+    }
+
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.addEventListener('click', function () { setLanguage(b.dataset.lang); });
+    });
+
+    apply();
+  })();
+</script>
 </body>
 </html>
