@@ -19,23 +19,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#F3ECDF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1220" media="(prefers-color-scheme: dark)">
-<script>
-  // Decide the language before the first paint, so a Georgian reader never sees English flash by.
-  (function () {
-    var lang = null;
-    try {
-      lang = new URLSearchParams(location.search).get('lang')
-          || localStorage.getItem('factorylabs.lang')
-          || localStorage.getItem('chronos.lang');
-    } catch (e) {}
-    if (lang !== 'ka' && lang !== 'en') {
-      var prefs = navigator.languages || [navigator.language || 'en'];
-      lang = prefs.some(function (l) { return /^ka\b/i.test(l); }) ? 'ka' : 'en';
-    }
-    document.documentElement.lang = lang;
-    if (lang !== 'en') document.documentElement.classList.add('i18n-pending');
-  })();
-</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%238A5C22' d='M12 1C13.2 7.2 16.8 10.8 23 12 16.8 13.2 13.2 16.8 12 23 10.8 16.8 7.2 13.2 1 12 7.2 10.8 10.8 7.2 12 1Z'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -253,20 +236,7 @@
   footer a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   footer a:hover { color: var(--bronze); }
 
-  /* ---- language ------------------------------------------------------- */
-  html.i18n-pending body { visibility: hidden; }
-  .top-right { display: flex; align-items: center; gap: 10px; }
-  .lang {
-    display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px;
-    border: 1px solid var(--divider); background: color-mix(in srgb, var(--surface) 70%, transparent);
-  }
-  .lang button {
-    border: 0; background: none; cursor: pointer; padding: 7px 11px; border-radius: 999px;
-    font: 600 12.5px/1 var(--sans); color: var(--ink-3);
-    transition: background .2s, color .2s;
-  }
-  .lang button:hover { color: var(--ink-2); }
-  .lang button[aria-pressed="true"] { background: var(--surface-2); color: var(--ink); box-shadow: 0 1px 2px rgba(var(--shadow), .1); }
+  /* ---- skip link ------------------------------------------------------ */
   .skip {
     position: absolute; left: -9999px; top: 0; z-index: 5;
     padding: 13px 20px; border-radius: 0 0 14px 0;
@@ -275,21 +245,7 @@
   }
   .skip:focus { left: 0; }
 
-  /* Georgian has no letter case and runs longer, so it gets its own metrics. */
-  html[lang="ka"] body { line-height: 1.72; }
-  html[lang="ka"] h1 { font-size: clamp(34px, 7vw, 66px); line-height: 1.14; letter-spacing: -.012em; }
-  html[lang="ka"] h1 em { font-style: normal; }
-  html[lang="ka"] .kicker,
-  html[lang="ka"] .sec-h,
-  html[lang="ka"] .fl-eyebrow { text-transform: none; letter-spacing: .05em; }
-  html[lang="ka"] .fl-name { font-size: clamp(27px, 4vw, 36px); letter-spacing: -.005em; }
-  html[lang="ka"] .grid h3,
-  html[lang="ka"] .closing h2,
-  html[lang="ka"] .stats b { letter-spacing: -.005em; }
-  html[lang="ka"] .stats span { font-size: 12px; }
-  html[lang="ka"] .lede { font-size: clamp(16.5px, 2vw, 19.5px); }
-
-  a:focus-visible, .lang button:focus-visible { outline: 2px solid var(--bronze); outline-offset: 4px; }
+  a:focus-visible { outline: 2px solid var(--bronze); outline-offset: 4px; }
   .flagship:focus-visible { outline-offset: 6px; }
 
   /* ---- entrance -------------------------------------------------------- */
@@ -302,7 +258,6 @@
   }
   @media (max-width: 560px) {
     .top { padding-inline: 20px; }
-    .top-link { display: none; }
     main, footer { padding-inline: 20px; }
     main { padding-top: 48px; }
     .fl-head { gap: 15px; }
@@ -322,218 +277,92 @@
 <body>
 <div class="atmos" aria-hidden="true"></div>
 
-<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+<a class="skip" href="#main">Skip to content</a>
 
 <header class="top rise">
   <a class="brand" href="/" aria-label="Factory Labs — home">
     <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 1C13.2 7.2 16.8 10.8 23 12 16.8 13.2 13.2 16.8 12 23 10.8 16.8 7.2 13.2 1 12 7.2 10.8 10.8 7.2 12 1Z"/></svg>
     <span>Factory Labs</span>
   </a>
-  <span class="top-right">
-    <span class="lang" role="group" data-i18n-aria="lang_label" aria-label="Language">
-      <button type="button" data-lang="ka" lang="ka" aria-pressed="false">ქარ</button>
-      <button type="button" data-lang="en" lang="en" aria-pressed="true">EN</button>
-    </span>
-    <a class="top-link" href="mailto:factorylabsteam@gmail.com" data-i18n="nav_work">Work with us</a>
-  </span>
+  <a class="top-link" href="mailto:factorylabsteam@gmail.com">Work with us</a>
 </header>
 
 <main id="main">
   <section class="hero">
-    <p class="kicker rise" style="animation-delay:.05s" data-i18n="hero_kicker">Product studio</p>
-    <h1 class="rise" style="animation-delay:.12s" data-i18n-html="hero_title">We build apps<br>people <em>keep</em>.</h1>
-    <p class="lede rise" style="animation-delay:.2s" data-i18n="hero_lede">One idea at a time, taken all the way. Research, design, engineering and illustration under one roof — until the whole thing feels effortless.</p>
+    <p class="kicker rise" style="animation-delay:.05s">Product studio</p>
+    <h1 class="rise" style="animation-delay:.12s">We build apps<br>people <em>keep</em>.</h1>
+    <p class="lede rise" style="animation-delay:.2s">One idea at a time, taken all the way. Research, design, engineering and illustration under one roof — until the whole thing feels effortless.</p>
     <div class="actions rise" style="animation-delay:.28s">
-      <a class="btn btn-primary" href="/chronos/" data-chronos="/chronos/"><span data-i18n="hero_cta_primary">Meet Chronos</span> <span class="arrow" aria-hidden="true">→</span></a>
-      <a class="btn btn-ghost" href="mailto:factorylabsteam@gmail.com" data-i18n="hero_cta_secondary">Work with us</a>
+      <a class="btn btn-primary" href="/chronos/">Meet Chronos <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="btn btn-ghost" href="mailto:factorylabsteam@gmail.com">Work with us</a>
     </div>
   </section>
 
   <section class="section rise" style="animation-delay:.36s">
-    <h2 class="sec-h" data-i18n="apps_heading">What we make</h2>
-    <a class="flagship" href="/chronos/" data-chronos="/chronos/">
-      <span class="fl-eyebrow" data-i18n="fl_eyebrow">Flagship</span>
+    <h2 class="sec-h">What we make</h2>
+    <a class="flagship" href="/chronos/">
+      <span class="fl-eyebrow">Flagship</span>
       <span class="fl-head">
-        <img class="fl-icon" src="assets/chronos-icon.png" alt="Chronos app icon" data-i18n-alt="fl_icon_alt" width="88" height="88" decoding="async">
+        <img class="fl-icon" src="assets/chronos-icon.png" alt="Chronos app icon" width="88" height="88" decoding="async">
         <span>
           <span class="fl-name">Chronos</span>
-          <span class="fl-tag" data-i18n="fl_tagline">History, in small discoveries</span>
+          <span class="fl-tag">History, in small discoveries</span>
         </span>
       </span>
-      <span class="fl-desc" data-i18n="fl_desc">The strangest true stories that ever happened, as short illustrated cards you can read in a minute. Every story is written, illustrated and traced back to a real source before it ships.</span>
+      <span class="fl-desc">The strangest true stories that ever happened, as short illustrated cards you can read in a minute. Every story is written, illustrated and traced back to a real source before it ships.</span>
       <span class="stats">
-        <span><b>75</b><span data-i18n="stat_stories">illustrated stories</span></span>
-        <span><b>150+</b><span data-i18n="stat_events">events on the timeline</span></span>
-        <span><b>84</b><span data-i18n="stat_civs">civilizations</span></span>
-        <span><b>59</b><span data-i18n="stat_regions">regions mapped</span></span>
+        <span><b>75</b><span>illustrated stories</span></span>
+        <span><b>150+</b><span>events on the timeline</span></span>
+        <span><b>84</b><span>civilizations</span></span>
+        <span><b>59</b><span>regions mapped</span></span>
       </span>
-      <span class="fl-cta"><span data-i18n="fl_cta">Visit Chronos</span> <span class="arrow" aria-hidden="true">→</span></span>
+      <span class="fl-cta">Visit Chronos <span class="arrow" aria-hidden="true">→</span></span>
     </a>
-    <p class="note" data-i18n="apps_note">The next one is already in the workshop.</p>
+    <p class="note">The next one is already in the workshop.</p>
   </section>
 
   <section class="section rise" style="animation-delay:.44s">
-    <h2 class="sec-h" data-i18n="work_heading">How we work</h2>
+    <h2 class="sec-h">How we work</h2>
     <div class="grid">
       <article>
-        <h3 data-i18n="w1_title">Deep, not wide</h3>
-        <p data-i18n="w1_text">One product gets the whole team. We would rather build a single thing people open every day than a shelf of things they forget.</p>
+        <h3>Deep, not wide</h3>
+        <p>One product gets the whole team. We would rather build a single thing people open every day than a shelf of things they forget.</p>
       </article>
       <article>
-        <h3 data-i18n="w2_title">Design leads</h3>
-        <p data-i18n="w2_text">Every screen is designed, argued over and rebuilt before it is called finished. The details nobody notices are the ones that make it feel good.</p>
+        <h3>Design leads</h3>
+        <p>Every screen is designed, argued over and rebuilt before it is called finished. The details nobody notices are the ones that make it feel good.</p>
       </article>
       <article>
-        <h3 data-i18n="w3_title">Built to be fast</h3>
-        <p data-i18n="w3_text">Smooth scrolling, instant launches, no waiting on a spinner. Performance is a feature we refuse to trade away.</p>
+        <h3>Built to be fast</h3>
+        <p>Smooth scrolling, instant launches, no waiting on a spinner. Performance is a feature we refuse to trade away.</p>
       </article>
       <article>
-        <h3 data-i18n="w4_title">Nothing made up</h3>
-        <p data-i18n="w4_text">Every fact we publish is checked and credited to its source. If we cannot stand behind it, it does not go in the app.</p>
+        <h3>Nothing made up</h3>
+        <p>Every fact we publish is checked and credited to its source. If we cannot stand behind it, it does not go in the app.</p>
       </article>
     </div>
   </section>
 
   <section class="closing rise" style="animation-delay:.5s">
     <div>
-      <h2 data-i18n="closing_title">Got something ambitious?</h2>
-      <p data-i18n="closing_text">A new product, a partnership, or an idea you cannot shake. Tell us what you are building.</p>
+      <h2>Got something ambitious?</h2>
+      <p>A new product, a partnership, or an idea you cannot shake. Tell us what you are building.</p>
     </div>
-    <a class="btn btn-primary" href="mailto:factorylabsteam@gmail.com"><span data-i18n="closing_cta">Start a conversation</span> <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="btn btn-primary" href="mailto:factorylabsteam@gmail.com">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
   </section>
 </main>
 
 <footer>
   <span class="foot-brand">
     <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 1C13.2 7.2 16.8 10.8 23 12 16.8 13.2 13.2 16.8 12 23 10.8 16.8 7.2 13.2 1 12 7.2 10.8 10.8 7.2 12 1Z"/></svg>
-    <span data-i18n="footer_copy">© 2026 Factory Labs</span>
+    <span>© 2026 Factory Labs</span>
   </span>
   <nav class="foot-links">
-    <a href="/chronos/" data-chronos="/chronos/">Chronos</a>
-    <a href="/chronos/support.html" data-chronos="/chronos/support.html" data-i18n="footer_support">Support</a>
-    <a href="/chronos/privacy.html" data-chronos="/chronos/privacy.html" data-i18n="footer_privacy">Privacy</a>
+    <a href="/chronos/">Chronos</a>
+    <a href="/chronos/support.html">Support</a>
+    <a href="/chronos/privacy.html">Privacy</a>
     <a href="mailto:factorylabsteam@gmail.com">factorylabsteam@gmail.com</a>
   </nav>
 </footer>
-<script>
-  (function () {
-    var STRINGS = {
-      en: {
-        page_title: 'Factory Labs',
-        page_desc: 'Factory Labs is a product studio. We build apps people keep. Home of Chronos.',
-        skip: 'Skip to content',
-        lang_label: 'Language',
-        nav_work: 'Work with us',
-        hero_kicker: 'Product studio',
-        hero_title: 'We build apps<br>people <em>keep</em>.',
-        hero_lede: 'One idea at a time, taken all the way. Research, design, engineering and illustration under one roof — until the whole thing feels effortless.',
-        hero_cta_primary: 'Meet Chronos',
-        hero_cta_secondary: 'Work with us',
-        apps_heading: 'What we make',
-        fl_eyebrow: 'Flagship',
-        fl_icon_alt: 'Chronos app icon',
-        fl_tagline: 'History, in small discoveries',
-        fl_desc: 'The strangest true stories that ever happened, as short illustrated cards you can read in a minute. Every story is written, illustrated and traced back to a real source before it ships.',
-        stat_stories: 'illustrated stories',
-        stat_events: 'events on the timeline',
-        stat_civs: 'civilizations',
-        stat_regions: 'regions mapped',
-        fl_cta: 'Visit Chronos',
-        apps_note: 'The next one is already in the workshop.',
-        work_heading: 'How we work',
-        w1_title: 'Deep, not wide',
-        w1_text: 'One product gets the whole team. We would rather build a single thing people open every day than a shelf of things they forget.',
-        w2_title: 'Design leads',
-        w2_text: 'Every screen is designed, argued over and rebuilt before it is called finished. The details nobody notices are the ones that make it feel good.',
-        w3_title: 'Built to be fast',
-        w3_text: 'Smooth scrolling, instant launches, no waiting on a spinner. Performance is a feature we refuse to trade away.',
-        w4_title: 'Nothing made up',
-        w4_text: 'Every fact we publish is checked and credited to its source. If we cannot stand behind it, it does not go in the app.',
-        closing_title: 'Got something ambitious?',
-        closing_text: 'A new product, a partnership, or an idea you cannot shake. Tell us what you are building.',
-        closing_cta: 'Start a conversation',
-        footer_support: 'Support',
-        footer_privacy: 'Privacy',
-        footer_copy: '© 2026 Factory Labs'
-      },
-      ka: {
-        page_title: 'Factory Labs — პროდუქტების სტუდია',
-        page_desc: 'Factory Labs პროდუქტების სტუდიაა. ვქმნით აპებს, რომლებიც რჩება. აქ იქმნება Chronos.',
-        skip: 'შინაარსზე გადასვლა',
-        lang_label: 'ენა',
-        nav_work: 'თანამშრომლობა',
-        hero_kicker: 'პროდუქტების სტუდია',
-        hero_title: 'ვქმნით აპებს,<br>რომლებიც <em>რჩება</em>.',
-        hero_lede: 'ერთ იდეაზე ვმუშაობთ და ბოლომდე ვასრულებთ. კვლევა, დიზაინი, ინჟინერია და ილუსტრაცია — ერთ ჭერქვეშ, სანამ ყველაფერი ბუნებრივად არ იმუშავებს.',
-        hero_cta_primary: 'გაიცანით Chronos',
-        hero_cta_secondary: 'თანამშრომლობა',
-        apps_heading: 'რას ვქმნით',
-        fl_eyebrow: 'მთავარი პროდუქტი',
-        fl_icon_alt: 'Chronos-ის აპის ხატულა',
-        fl_tagline: 'ისტორია პატარა აღმოჩენებად',
-        fl_desc: 'ყველაზე უცნაური ნამდვილი ამბები მოკლე, ილუსტრირებულ ბარათებად — თითოეული ერთ წუთში იკითხება. ყველა ისტორია დაწერილი, დახატული და ნამდვილ წყაროზე დაყრდნობილია.',
-        stat_stories: 'ილუსტრირებული ისტორია',
-        stat_events: 'მოვლენა ქრონოლოგიაზე',
-        stat_civs: 'ცივილიზაცია',
-        stat_regions: 'რეგიონი რუკაზე',
-        fl_cta: 'ნახეთ Chronos',
-        apps_note: 'შემდეგი უკვე სახელოსნოშია.',
-        work_heading: 'როგორ ვმუშაობთ',
-        w1_title: 'სიღრმეში, და არა სიგანეში',
-        w1_text: 'ერთ პროდუქტს მთელი გუნდი ხვდება. გვირჩევნია ერთი რამ, რომელსაც ყოველდღე ხსნიან, ვიდრე ათი, რომელსაც ივიწყებენ.',
-        w2_title: 'დიზაინი პირველია',
-        w2_text: 'ყველა ეკრანი იხატება, კამათდება და თავიდან შენდება, სანამ დასრულებულად ჩაითვლება. სწორედ შეუმჩნეველი დეტალები ქმნის შეგრძნებას.',
-        w3_title: 'აგებულია სისწრაფისთვის',
-        w3_text: 'გლუვი გადაადგილება, მყისიერი გაშვება, ლოდინის გარეშე. წარმადობა ფუნქციაა და მასზე უარს არ ვამბობთ.',
-        w4_title: 'არაფერია მოგონილი',
-        w4_text: 'ყველა ფაქტი გადამოწმებულია და წყარო მითითებული. თუ მის უკან ვერ ვდგებით, აპში არ შედის.',
-        closing_title: 'გაქვთ ამბიციური იდეა?',
-        closing_text: 'ახალი პროდუქტი, პარტნიორობა ან იდეა, რომელიც თავს არ განებებთ. მოგვწერეთ, რას აშენებთ.',
-        closing_cta: 'დაგვიკავშირდით',
-        footer_support: 'მხარდაჭერა',
-        footer_privacy: 'კონფიდენციალურობა',
-        footer_copy: '© 2026 Factory Labs'
-      }
-    };
-
-    var root = document.documentElement;
-    var lang = root.lang === 'ka' ? 'ka' : 'en';
-
-    function t(key) { return (STRINGS[lang] && STRINGS[lang][key]) || STRINGS.en[key] || key; }
-
-    function apply() {
-      document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.dataset.i18n); });
-      document.querySelectorAll('[data-i18n-html]').forEach(function (el) { el.innerHTML = t(el.dataset.i18nHtml); });
-      document.querySelectorAll('[data-i18n-alt]').forEach(function (el) { el.alt = t(el.dataset.i18nAlt); });
-      document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
-      document.title = t('page_title');
-      var desc = document.querySelector('meta[name="description"]');
-      if (desc) desc.content = t('page_desc');
-      // Carry the reading language across to the Chronos site.
-      document.querySelectorAll('[data-chronos]').forEach(function (a) { a.href = a.dataset.chronos + '?lang=' + lang; });
-      document.querySelectorAll('.lang button').forEach(function (b) {
-        b.setAttribute('aria-pressed', String(b.dataset.lang === lang));
-      });
-      root.classList.remove('i18n-pending');
-    }
-
-    function setLanguage(next) {
-      if (next === lang) return;
-      lang = next;
-      root.lang = lang;
-      try {
-        localStorage.setItem('factorylabs.lang', lang);
-        localStorage.setItem('chronos.lang', lang);
-      } catch (e) {}
-      apply();
-    }
-
-    document.querySelectorAll('.lang button').forEach(function (b) {
-      b.addEventListener('click', function () { setLanguage(b.dataset.lang); });
-    });
-
-    apply();
-  })();
-</script>
 </body>
 </html>
