@@ -1,4 +1,15 @@
 {
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["7QU8N8ZAQ8.com.factorylabs.chronos"],
+        "components": [
+          { "/": "/chronos/open", "comment": "A shared Chronos card" },
+          { "/": "/chronos/open/", "comment": "The same, with the trailing slash" }
+        ]
+      }
+    ]
+  },
   "appclips": {
     "apps": ["7QU8N8ZAQ8.com.factorylabs.chronos.Clip"]
   }
