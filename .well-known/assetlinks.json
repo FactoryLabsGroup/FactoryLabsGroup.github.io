@@ -1,0 +1,18 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.imoment",
+      "sha256_cert_fingerprints": ["69:A5:02:22:F7:76:CC:72:56:40:65:0D:E1:E2:9C:3F:A3:DF:CA:BC:4A:41:52:44:CC:06:3D:55:8B:E5:AC:49"]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.imoment.test",
+      "sha256_cert_fingerprints": ["69:A5:02:22:F7:76:CC:72:56:40:65:0D:E1:E2:9C:3F:A3:DF:CA:BC:4A:41:52:44:CC:06:3D:55:8B:E5:AC:49"]
+    }
+  }
+]
