@@ -1,0 +1,10 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.factorylabs.chronos",
+      "sha256_cert_fingerprints": ["EE:A6:A3:25:86:58:0B:62:9E:46:7A:DC:43:A7:C2:CF:A8:55:74:BA:E5:B9:E2:60:27:0C:AA:E9:AB:FE:AF:FA"]
+    }
+  }
+]
