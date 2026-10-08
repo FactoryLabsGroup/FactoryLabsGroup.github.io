@@ -96,8 +96,6 @@
   .top, main, footer { position: relative; z-index: 2; width: 100%; max-width: 860px; margin: 0 auto; }
   .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 28px 0; }
   .brand { display: inline-flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font: 700 16.5px/1 var(--serif); letter-spacing: -.01em; }
-  .mark { width: 17px; height: 17px; color: var(--bronze); flex: none; transition: rotate .6s cubic-bezier(.2,.7,.2,1); }
-  .brand:hover .mark { rotate: 90deg; }
   .top-link {
     font: 600 14px/1 var(--sans); color: var(--ink-2); text-decoration: none;
     padding: 10px 16px; border-radius: 999px; border: 1px solid var(--divider);
@@ -259,13 +257,9 @@
     border-top: 1px solid var(--divider); color: var(--ink-3); font-size: 14px;
   }
   .foot-brand { display: inline-flex; align-items: center; gap: 9px; }
-  .foot-brand .mark { width: 13px; height: 13px; opacity: .8; }
   .foot-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
-  .foot-app { display: inline-flex; gap: 14px; }
   footer a { color: var(--ink-2); text-decoration: none; transition: color .2s; }
   footer a:hover { color: var(--bronze); }
-  .foot-app a:first-child { color: var(--ink); font-weight: 600; }
-  .foot-app a:first-child:hover { color: var(--bronze); }
 
   /* ---- skip link ------------------------------------------------------ */
   .skip {
@@ -313,7 +307,6 @@
 
 <header class="top rise">
   <a class="brand" href="/" aria-label="Factory Labs — home">
-    <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 1C13.2 7.2 16.8 10.8 23 12 16.8 13.2 13.2 16.8 12 23 10.8 16.8 7.2 13.2 1 12 7.2 10.8 10.8 7.2 12 1Z"/></svg>
     <span>Factory Labs</span>
   </a>
   <a class="top-link" href="mailto:factorylabsteam@gmail.com">Work with us</a>
@@ -406,20 +399,9 @@
 
 <footer>
   <span class="foot-brand">
-    <svg class="mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 1C13.2 7.2 16.8 10.8 23 12 16.8 13.2 13.2 16.8 12 23 10.8 16.8 7.2 13.2 1 12 7.2 10.8 10.8 7.2 12 1Z"/></svg>
     <span>© 2026 Factory Labs</span>
   </span>
-  <nav class="foot-links" aria-label="Apps and contact">
-    <span class="foot-app">
-      <a href="/chronos/">Chronos</a>
-      <a href="/chronos/support.html" aria-label="Chronos support">Support</a>
-      <a href="/chronos/privacy.html" aria-label="Chronos privacy policy">Privacy</a>
-    </span>
-    <span class="foot-app">
-      <a href="/joy/">Joy</a>
-      <a href="/joy/support.html" aria-label="Joy support">Support</a>
-      <a href="/joy/privacy.html" aria-label="Joy privacy policy">Privacy</a>
-    </span>
+  <nav class="foot-links" aria-label="Contact">
     <a href="mailto:factorylabsteam@gmail.com">factorylabsteam@gmail.com</a>
   </nav>
 </footer>
