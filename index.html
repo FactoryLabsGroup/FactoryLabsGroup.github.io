@@ -95,13 +95,6 @@
   .top, main, footer { position: relative; z-index: 2; width: 100%; max-width: 860px; margin: 0 auto; }
   .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 28px 28px 0; }
   .brand { display: inline-flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; font: 700 16.5px/1 var(--serif); letter-spacing: -.01em; }
-  .top-link {
-    font: 600 14px/1 var(--sans); color: var(--ink-2); text-decoration: none;
-    padding: 10px 16px; border-radius: 999px; border: 1px solid var(--divider);
-    background: color-mix(in srgb, var(--surface) 70%, transparent);
-    transition: color .2s, border-color .2s, background .2s;
-  }
-  .top-link:hover { color: var(--bronze); border-color: color-mix(in srgb, var(--bronze) 40%, var(--divider)); background: var(--surface); }
 
   main { flex: 1; padding: clamp(60px, 12vh, 116px) 28px 40px; }
 
@@ -129,8 +122,6 @@
     box-shadow: 0 1px 0 rgba(255,255,255,.18) inset, 0 12px 26px -12px rgba(138,92,34,.8);
   }
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,.22) inset, 0 18px 34px -14px rgba(138,92,34,.9); }
-  .btn-ghost { color: var(--ink); border: 1px solid var(--divider); background: color-mix(in srgb, var(--surface) 60%, transparent); }
-  .btn-ghost:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--bronze) 45%, var(--divider)); color: var(--bronze); }
   .btn .arrow { transition: translate .25s cubic-bezier(.2,.7,.2,1); }
   .btn:hover .arrow { translate: 4px 0; }
   .btn:hover .arrow-down { translate: 0 3px; }
@@ -308,7 +299,6 @@
   <a class="brand" href="/" aria-label="Factory Labs — home">
     <span>Factory Labs</span>
   </a>
-  <a class="top-link" href="mailto:contact@factorylabs.app">Work with us</a>
 </header>
 
 <main id="main">
@@ -318,7 +308,6 @@
     <p class="lede rise" style="animation-delay:.2s">One idea at a time, taken all the way. Research, design, engineering and illustration under one roof — until the whole thing feels effortless.</p>
     <div class="actions rise" style="animation-delay:.28s">
       <a class="btn btn-primary" href="#apps">See what we make <span class="arrow arrow-down" aria-hidden="true">↓</span></a>
-      <a class="btn btn-ghost" href="mailto:contact@factorylabs.app">Work with us</a>
     </div>
   </section>
 
