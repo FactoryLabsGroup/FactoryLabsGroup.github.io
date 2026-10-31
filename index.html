@@ -150,7 +150,7 @@
     background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.14) 50%, transparent 58%);
     translate: -70% 0; opacity: 0;
   }
-  .app:hover, .app:focus-visible, .app:focus-within {
+  .app:hover, .app:focus-visible {
     transform: translateY(-4px);
     border-color: rgba(var(--app-glow), .32);
     box-shadow: 0 44px 84px -40px rgba(var(--app-shade), .95), 0 2px 4px rgba(var(--shadow), .07);
@@ -219,23 +219,6 @@
   .app-cta { display: inline-flex; align-items: center; gap: 9px; margin: 30px 0 0; font: 600 15px/1 var(--sans); color: var(--app-accent); }
   .app:hover .app-cta .arrow { translate: 5px 0; }
   .app-cta .arrow { transition: translate .25s cubic-bezier(.2,.7,.2,1); }
-  /* A card that holds more than one link: the CTA stretches over the whole card,
-     and the store link sits above it. */
-  .app-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin: 30px 0 0; }
-  .app-actions .app-cta { margin: 0; text-decoration: none; }
-  .app-actions .app-cta::before { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
-  .app-actions .app-cta:focus-visible { outline: none; }
-  .app:has(.app-cta:focus-visible) { outline: 2px solid var(--bronze); outline-offset: 6px; }
-  .store {
-    position: relative; z-index: 2;
-    display: inline-flex; align-items: center; gap: 9px;
-    padding: 10px 16px 10px 13px; border-radius: 999px;
-    font: 600 14px/1 var(--sans); color: var(--app-ink); text-decoration: none;
-    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16);
-    transition: background .2s, border-color .2s;
-  }
-  .store:hover { background: rgba(255,255,255,.13); border-color: rgba(var(--app-glow), .5); }
-  .store svg { width: 16px; height: 16px; flex: none; }
   .note { margin: 20px 0 0; color: var(--ink-3); font-size: 14.5px; }
 
   /* ---- capabilities --------------------------------------------------- */
@@ -349,8 +332,8 @@
         </span>
         <span class="app-cta">Visit Chronos <span class="arrow" aria-hidden="true">→</span></span>
       </a>
-      <div class="app app--joy">
-        <span class="app-eyebrow">Now on Google Play</span>
+      <a class="app app--joy" href="/joy/">
+        <span class="app-eyebrow">New</span>
         <span class="app-head">
           <img class="app-icon" src="assets/joy-icon.png" alt="Joy app icon" width="88" height="88" decoding="async">
           <span>
@@ -365,14 +348,8 @@
           <span><b>2–16</b><span>players</span></span>
           <span><b>0</b><span>accounts or ads</span></span>
         </span>
-        <span class="app-actions">
-          <a class="app-cta" href="/joy/">Visit Joy <span class="arrow" aria-hidden="true">→</span></a>
-          <a class="store" href="https://play.google.com/store/apps/details?id=com.factorylabs.joy" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#34A853" d="M3.6 1.8 13.8 12 3.6 22.2c-.4-.2-.6-.6-.6-1.1V2.9c0-.5.2-.9.6-1.1Z"/><path fill="#FBBC04" d="m17.2 8.6 3.5 2c.9.5.9 1.8 0 2.3l-3.5 2L13.8 12l3.4-3.4Z"/><path fill="#4285F4" d="M3.6 1.8c.3-.2.8-.2 1.2 0l12.4 6.8-3.4 3.4L3.6 1.8Z"/><path fill="#EA4335" d="M13.8 12l3.4 3.4-12.4 6.8c-.4.2-.9.2-1.2 0L13.8 12Z"/></svg>
-            Get it on Google Play
-          </a>
-        </span>
-      </div>
+        <span class="app-cta">Visit Joy <span class="arrow" aria-hidden="true">→</span></span>
+      </a>
     </div>
     <p class="note">The next one is already in the workshop.</p>
   </section>
